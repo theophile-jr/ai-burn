@@ -1,7 +1,19 @@
+<div align="center">
+
 # 🔥 ai-burn
 
-How much CO₂ has your AI tooling emitted? How much water did it drink? What
-would it have cost without your subscription? One command, fully local.
+### What did your AI *actually* burn?
+
+The CO₂, water and money your AI coding tools quietly torched —<br>
+in **one command**, **fully local**, nothing uploaded.
+
+[![npm](https://img.shields.io/npm/v/ai-burn?style=flat-square&color=F97316&label=npm)](https://www.npmjs.com/package/ai-burn)
+[![downloads](https://img.shields.io/npm/dt/ai-burn?style=flat-square&color=F97316&label=downloads)](https://www.npmjs.com/package/ai-burn)
+[![node](https://img.shields.io/node/v/ai-burn?style=flat-square&color=F97316)](package.json)
+[![license](https://img.shields.io/badge/license-MIT-F97316?style=flat-square)](LICENSE)
+[![network](https://img.shields.io/badge/network-zero%20requests-22C55E?style=flat-square)](#privacy--safety)
+
+</div>
 
 ```bash
 npx ai-burn
@@ -45,9 +57,13 @@ water and money. Nothing is uploaded anywhere — ai-burn never makes a network
 request. The output is information, plain and simple: what you do with it is
 up to you.
 
-Parle aussi français : `--lang fr` (auto-detected from your locale).
+> 🇫🇷 **Parle aussi français** — `--lang fr` (auto-detected from your locale).
 
-Website: [ai-burn.onrender.com](https://ai-burn.onrender.com)
+<div align="center">
+
+**[🌐 Website](https://ai-burn.onrender.com)** · **[🔬 Methodology](#methodology-aka-how-wrong-is-this)** · **[🔒 Privacy](#privacy--safety)** · **[⭐ Star this repo](https://github.com/theophile-jr/ai-burn)**
+
+</div>
 
 ## Supported tools
 

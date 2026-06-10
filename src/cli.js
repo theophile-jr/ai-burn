@@ -2,7 +2,7 @@ import { readFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import { createInterface } from "node:readline/promises";
 import { collectUsage, SOURCE_IDS } from "./usage.js";
-import { render, toJson } from "./render.js";
+import { render, toJson, buildShare } from "./render.js";
 import { LANGS, detectLang, getStrings } from "./i18n.js";
 
 const HELP = `
@@ -20,6 +20,7 @@ const HELP = `
     --days <n>     Only count the last n days (default: all time)
     --tools <ids>  Comma-separated subset of: ${SOURCE_IDS.join(", ")}
     --lang <code>  Report language: ${LANGS.join(", ")} (default: your locale)
+    --share        Print a clean, copy-pasteable summary to share
     --json         Machine-readable output (always English keys)
     --no-color     Disable colors (NO_COLOR env is also respected)
     -y, --yes      Skip the confirmation prompt
@@ -35,6 +36,7 @@ export function parseArgs(argv) {
     tools: undefined,
     lang: undefined,
     json: false,
+    share: false,
     color: true,
     yes: false,
     help: false,
@@ -68,6 +70,7 @@ export function parseArgs(argv) {
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i];
     if (a === "--json") opts.json = true;
+    else if (a === "--share") opts.share = true;
     else if (a === "--no-color") opts.color = false;
     else if (a === "-y" || a === "--yes") opts.yes = true;
     else if (a === "-h" || a === "--help") opts.help = true;
@@ -127,6 +130,10 @@ export async function main(argv) {
 
   if (opts.json) {
     console.log(JSON.stringify(toJson(agg, opts), null, 2));
+    return;
+  }
+  if (opts.share) {
+    console.log(buildShare(agg, { lang }));
     return;
   }
   console.log(render(agg, { color, days: opts.days, lang }));

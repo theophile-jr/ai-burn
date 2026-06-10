@@ -30,6 +30,17 @@ const EN = {
   tokens: "tokens",
   footer:
     "Rough estimates — run with --json for raw numbers, README for methodology.",
+  shareHint: "Share your stats: npx ai-burn --share",
+  share: ({ co2, water, rank, km }) =>
+    [
+      `🔥 My AI coding tools burned ${co2} of CO₂e and drank ${water} of water` +
+        (km ? ` — like driving ${km} km in a petrol car.` : "."),
+      `Rank: ${rank}`,
+      ``,
+      `What did your AI burn? 👉 npx ai-burn`,
+      `https://ai-burn.onrender.com`,
+    ].join("\n"),
+  shareEmpty: "Nothing to share yet — no AI tool history found. 🌿",
   rankNames: {},
   eqLabels: {},
   units: {},
@@ -58,6 +69,17 @@ const FR = {
   tokens: "jetons",
   footer:
     "Estimations approximatives — --json pour les chiffres bruts, README pour la méthodologie.",
+  shareHint: "Partagez vos stats : npx ai-burn --share",
+  share: ({ co2, water, rank, km }) =>
+    [
+      `🔥 Mes outils d'IA ont brûlé ${co2} de CO₂e et bu ${water} d'eau` +
+        (km ? ` — comme ${km} km en voiture essence.` : "."),
+      `Rang : ${rank}`,
+      ``,
+      `Et votre IA, elle a brûlé quoi ? 👉 npx ai-burn`,
+      `https://ai-burn.onrender.com`,
+    ].join("\n"),
+  shareEmpty: "Rien à partager — aucun historique d'outil IA trouvé. 🌿",
   rankNames: {
     "Carbon Seedling": "Pousse de Carbone",
     "Gentle Breeze": "Brise Légère",

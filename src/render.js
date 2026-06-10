@@ -194,8 +194,27 @@ export function render(agg, opts = {}) {
   push();
 
   push(s.gray(L.footer));
+  push(s.gray(L.shareHint));
   push();
   return out.join("\n");
+}
+
+/**
+ * A clean, copy-pasteable one-shot summary for social media — no colors,
+ * no ANSI, ready to drop into Reddit / X / a chat.
+ */
+export function buildShare(agg, opts = {}) {
+  const L = getStrings(opts.lang ?? "en");
+  if (agg.entries === 0) return L.shareEmpty;
+  const { rank } = rankFor(agg.kg);
+  const carEq = EQUIVALENTS.find((e) => e.label === "in a petrol car");
+  const km = carEq ? fmtQty(agg.kg * carEq.perKg) : null;
+  return L.share({
+    co2: fmtCo2(agg.kg),
+    water: fmtWater(agg.waterL),
+    rank: `${rank.emoji} ${tr(L, "rankNames", rank.name)}`,
+    km,
+  });
 }
 
 export function toJson(agg, opts = {}) {
