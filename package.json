@@ -1,0 +1,41 @@
+{
+  "name": "ai-burn",
+  "version": "0.3.0",
+  "description": "🔥 CO₂, water and money burned by your AI coding tools (Claude Code, Gemini CLI, Codex, Cursor, OpenCode). One command, fully local.",
+  "type": "module",
+  "bin": {
+    "ai-burn": "bin/ai-burn.js"
+  },
+  "main": "src/cli.js",
+  "files": [
+    "bin",
+    "src"
+  ],
+  "scripts": {
+    "test": "node --test test/"
+  },
+  "engines": {
+    "node": ">=18.17"
+  },
+  "homepage": "https://ai-burn.onrender.com",
+  "keywords": [
+    "claude",
+    "claude-code",
+    "gemini",
+    "codex",
+    "cursor",
+    "opencode",
+    "tokens",
+    "usage",
+    "cost",
+    "energy",
+    "water",
+    "co2",
+    "carbon",
+    "emissions",
+    "cli",
+    "ai"
+  ],
+  "author": "Théophile J-R",
+  "license": "MIT"
+}
