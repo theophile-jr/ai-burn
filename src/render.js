@@ -7,7 +7,7 @@ import {
 } from "./co2.js";
 import { getStrings, tr } from "./i18n.js";
 
-function makeStyles(color) {
+export function makeStyles(color) {
   const wrap = (open, close) => (s) => (color ? `\x1b[${open}m${s}\x1b[${close}m` : String(s));
   return {
     bold: wrap("1", "22"),
@@ -194,7 +194,7 @@ export function render(agg, opts = {}) {
   push();
 
   push(s.gray(L.footer));
-  push(s.gray(L.shareHint));
+  if (opts.shareHint !== false) push(s.gray(L.shareHint));
   push();
   return out.join("\n");
 }

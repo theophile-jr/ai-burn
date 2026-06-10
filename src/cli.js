@@ -2,7 +2,7 @@ import { readFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import { createInterface } from "node:readline/promises";
 import { collectUsage, SOURCE_IDS } from "./usage.js";
-import { render, toJson, buildShare } from "./render.js";
+import { render, toJson, buildShare, makeStyles } from "./render.js";
 import { LANGS, detectLang, getStrings } from "./i18n.js";
 
 const HELP = `
@@ -86,15 +86,30 @@ export function parseArgs(argv) {
   return opts;
 }
 
-/** Ask Y/n before touching any file. Enter or anything but n/no/non = yes. */
-async function askConsent(L) {
+/** A colored "[Y/n]" suffix for prompts. */
+const ynBadge = (s) =>
+  `${s.dim("[")}${s.green("Y")}${s.dim("/")}${s.red("n")}${s.dim("]")}`;
+
+/** Ask a single question on stderr; Enter or anything but n/no/non = yes. */
+async function askYesNo(question) {
   const rl = createInterface({ input: process.stdin, output: process.stderr });
   try {
-    const answer = (await rl.question(`  ${L.consent} [Y/n] `)).trim().toLowerCase();
+    const answer = (await rl.question(question)).trim().toLowerCase();
     return !/^(n|no|non)$/.test(answer);
   } finally {
     rl.close();
   }
+}
+
+/** Consent gate before touching any file. */
+async function askConsent(L, s) {
+  process.stderr.write(`\n  ${s.bold("🔥 ai-burn")} ${s.dim(L.consent)}\n\n`);
+  return askYesNo(`  ${s.bold(L.consentAsk)} ${ynBadge(s)} `);
+}
+
+/** Offer the copy-pasteable share snippet after the report. */
+async function askShare(L, s) {
+  return askYesNo(`\n  ${s.bold(`📋 ${L.sharePrompt}`)} ${ynBadge(s)} `);
 }
 
 export async function main(argv) {
@@ -114,11 +129,17 @@ export async function main(argv) {
   const lang = opts.lang ?? detectLang();
   const L = getStrings(lang);
 
+  const interactive =
+    process.stdin.isTTY === true && process.stderr.isTTY === true;
+  const promptColor =
+    opts.color && process.stderr.isTTY === true && !process.env.NO_COLOR;
+  const ps = makeStyles(promptColor);
+
   // Consent gate: nothing is read until the user says yes. Skipped with
   // --yes, or when there's no interactive terminal to ask on.
-  if (!opts.yes && process.stdin.isTTY === true && process.stderr.isTTY === true) {
-    if (!(await askConsent(L))) {
-      console.log(`  ${L.consentDeclined}`);
+  if (!opts.yes && interactive) {
+    if (!(await askConsent(L, ps))) {
+      console.log(`  ${ps.dim(L.consentDeclined)}`);
       return;
     }
   }
@@ -136,5 +157,12 @@ export async function main(argv) {
     console.log(buildShare(agg, { lang }));
     return;
   }
-  console.log(render(agg, { color, days: opts.days, lang }));
+
+  // On an interactive run with results, offer the share snippet afterwards
+  // (and drop the static hint, since we're asking directly).
+  const offerShare = interactive && !opts.yes && agg.entries > 0;
+  console.log(render(agg, { color, days: opts.days, lang, shareHint: !offerShare }));
+  if (offerShare && (await askShare(L, ps))) {
+    console.log(`\n${buildShare(agg, { lang })}\n`);
+  }
 }

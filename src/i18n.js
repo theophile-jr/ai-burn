@@ -9,8 +9,10 @@ export function detectLang(env = process.env) {
 
 const EN = {
   consent:
-    "ai-burn reads the local history of your AI coding tools (Claude Code, Gemini CLI, Codex, Cursor, OpenCode) to count tokens. Everything stays on this machine. Read them?",
+    "reads the local history of your AI coding tools (Claude Code, Gemini CLI, Codex, Cursor, OpenCode) to count tokens. Everything stays on this machine — nothing is uploaded.",
+  consentAsk: "Read them?",
   consentDeclined: "Okay — nothing was read.",
+  sharePrompt: "Want a shareable summary?",
   subtitle: (window) => `— what your AI burned (${window})`,
   allTime: "all time",
   lastDays: (n) => `last ${n} day${n === 1 ? "" : "s"}`,
@@ -48,8 +50,10 @@ const EN = {
 
 const FR = {
   consent:
-    "ai-burn lit l'historique local de vos outils d'IA (Claude Code, Gemini CLI, Codex, Cursor, OpenCode) pour compter les jetons. Tout reste sur cette machine. Les lire ?",
+    "lit l'historique local de vos outils d'IA (Claude Code, Gemini CLI, Codex, Cursor, OpenCode) pour compter les jetons. Tout reste sur cette machine — rien n'est envoyé.",
+  consentAsk: "Les lire ?",
   consentDeclined: "D'accord — rien n'a été lu.",
+  sharePrompt: "Une version à partager ?",
   subtitle: (window) => `— ce que votre IA a brûlé (${window})`,
   allTime: "depuis toujours",
   lastDays: (n) => `${n} dernier${n === 1 ? "" : "s"} jour${n === 1 ? "" : "s"}`,
