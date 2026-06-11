@@ -18,6 +18,13 @@
     "node": ">=18.17"
   },
   "homepage": "https://ai-burn.onrender.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/theophile-jr/ai-burn.git"
+  },
+  "bugs": {
+    "url": "https://github.com/theophile-jr/ai-burn/issues"
+  },
   "keywords": [
     "claude",
     "claude-code",
