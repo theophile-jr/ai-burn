@@ -1,6 +1,6 @@
 {
   "name": "ai-burn",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "🔥 CO₂, water and money burned by your AI coding tools (Claude Code, Gemini CLI, Codex, Cursor, OpenCode). One command, fully local.",
   "type": "module",
   "bin": {
